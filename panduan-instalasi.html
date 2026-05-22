@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan Instalasi - Aplikasi Kelulusan Sekolah</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(17, 24, 39, 0.7);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.35);
+            --accent: #8b5cf6;
+            --accent-glow: rgba(139, 92, 246, 0.35);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.12) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        header {
+            position: relative;
+            padding: 100px 20px 60px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .header-glow {
+            position: absolute;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, transparent 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa 10%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+            letter-spacing: -0.03em;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        main {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px 80px;
+        }
+
+        /* Tabs Navigation */
+        .tabs-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            background: rgba(31, 41, 55, 0.5);
+            padding: 6px;
+            border-radius: 16px;
+            border: 1px solid var(--card-border);
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 24px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 20px var(--primary-glow);
+        }
+
+        .tab-icon {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Panel Wrapper */
+        .tab-panel {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
+
+        /* Step Card */
+        .step-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 35px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .step-number {
+            font-family: 'Outfit', sans-serif;
+            width: 50px;
+            height: 50px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            font-weight: 700;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.1);
+        }
+
+        .step-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            font-size: 1rem;
+        }
+
+        /* Substeps & Code Blocks */
+        ol.substeps {
+            margin-left: 20px;
+            margin-bottom: 18px;
+            color: var(--text-muted);
+        }
+
+        ol.substeps li {
+            margin-bottom: 12px;
+            padding-left: 8px;
+        }
+
+        ol.substeps li strong {
+            color: #ffffff;
+        }
+
+        code-block {
+            display: block;
+            background: #07090e;
+            border: 1px solid rgba(255,255,255,0.05);
+            padding: 18px 24px;
+            border-radius: 14px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            color: #38bdf8;
+            margin: 15px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #64748b;
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        /* Alert Callout */
+        .alert-box {
+            background: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid var(--warning);
+            padding: 16px 20px;
+            border-radius: 0 16px 16px 0;
+            margin: 20px 0;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .alert-box.info {
+            background: rgba(59, 130, 246, 0.08);
+            border-left-color: var(--primary);
+        }
+
+        .alert-icon {
+            font-size: 1.25rem;
+            margin-top: 2px;
+        }
+
+        .alert-text {
+            font-size: 0.92rem;
+            color: var(--text-main);
+        }
+
+        .alert-text strong {
+            color: #ffffff;
+        }
+
+        /* Footer section */
+        .troubleshooting-sec {
+            background: rgba(31, 41, 55, 0.3);
+            border-radius: 28px;
+            border: 1px solid var(--card-border);
+            padding: 40px;
+            margin-top: 50px;
+        }
+
+        .troubleshooting-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 20px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .faq-question {
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 1.05rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-answer {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            padding-left: 24px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #4b5563;
+            font-size: 0.88rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            margin-top: 60px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.25rem;
+            }
+            .step-card {
+                padding: 24px;
+            }
+            .step-header {
+                gap: 14px;
+            }
+            .step-title {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-glow"></div>
+        <h1>Panduan Instalasi Server</h1>
+        <p class="subtitle">Panduan langkah demi langkah mempublikasikan Aplikasi Kelulusan Sekolah di cPanel atau hPanel Hosting Anda.</p>
+    </header>
+
+    <main>
+        <!-- Tab Switcher -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab('cpanel')">
+                <svg class="tab-icon" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                </svg>
+                cPanel Hosting
+            </button>
+            <button class="tab-btn" onclick="switchTab('hpanel')">
+                <svg class="tab-icon" viewBox="0 0 24 24">
+                    <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/>
+                </svg>
+                hPanel (Hostinger)
+            </button>
+        </div>
+
+        <!-- ================= CPANEL PANEL ================= -->
+        <div id="cpanel" class="tab-panel active">
+            
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Persiapkan Database MySQL</div>
+                </div>
+                <div class="step-content">
+                    <p>Pertama, Anda harus membuat database kosong untuk menyimpan data aplikasi:</p>
+                    <ol class="substeps">
+                        <li>Login ke <strong>cPanel</strong> Anda.</li>
+                        <li>Cari dan buka menu <strong>MySQL® Database Wizard</strong>.</li>
+                        <li>Masukkan nama database baru (misalnya: `kelulusan`), klik <strong>Next Step</strong>.</li>
+                        <li>Buat user database baru beserta password yang aman.</li>
+                        <li>Centang pilihan <strong>ALL PRIVILEGES</strong> untuk memberikan hak akses penuh ke user tersebut, lalu klik <strong>Make Changes</strong>.</li>
+                        <li>Catat info penting ini: <strong>Nama Database</strong>, <strong>User Database</strong>, dan <strong>Password Database</strong>.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Unggah File Project</div>
+                </div>
+                <div class="step-content">
+                    <p>Unggah semua file aplikasi ke folder public domain Anda:</p>
+                    <ol class="substeps">
+                        <li>Buka menu <strong>File Manager</strong> di cPanel.</li>
+                        <li>Masuk ke direktori domain Anda (biasanya `public_html` atau direktori subdomain Anda).</li>
+                        <li>Klik <strong>Upload</strong> di menu atas dan pilih file zip aplikasi.</li>
+                        <li>Setelah upload 100%, klik kanan file ZIP tersebut di File Manager dan pilih <strong>Extract</strong>.</li>
+                        <li>Pastikan struktur file telah terekstrak dengan benar di dalam folder tujuan Anda.</li>
+                    </ol>
+                    <div class="alert-box info">
+                        <span class="alert-icon">💡</span>
+                        <div class="alert-text">
+                            Aplikasi menggunakan folder <strong>public</strong> sebagai document root. Untuk keamanan terbaik, pastikan domain utama/subdomain Anda diarahkan langsung ke folder <code>public</code> di dalam folder ekstraksi tersebut.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Konfigurasi Domain & Redirection</div>
+                </div>
+                <div class="step-content">
+                    <p>Jika hosting cPanel Anda tidak memperbolehkan mengubah document root domain utama dari `public_html` ke `public_html/public`, Anda dapat menggunakan file `.htaccess` bawaan untuk menangani redirection:</p>
+                    <ol class="substeps">
+                        <li>Aplikasi ini sudah dilengkapi dengan file `.htaccess` di root direktori dan di dalam direktori `public` untuk melakukan redirection secara aman ke folder public secara otomatis.</li>
+                        <li>Pastikan file tersembunyi (dotfiles) terlihat di cPanel dengan menekan tombol <strong>Settings</strong> di kanan atas File Manager, lalu centang <strong>Show Hidden Files (dotfiles)</strong>.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Setup Aplikasi & Aktivasi Lisensi</div>
+                </div>
+                <div class="step-content">
+                    <p>Setelah file diunggah dan diarahkan dengan benar, jalankan setup otomatis melalui browser Anda:</p>
+                    <ol class="substeps">
+                        <li>Buka browser dan akses domain Anda (contoh: `https://domainanda.com`). Anda akan dialihkan secara otomatis ke halaman setup `/setup`.</li>
+                        <li>Isi formulir instalasi yang tersedia:
+                            <br>&bull; <strong>Nama Aplikasi</strong>: Judul aplikasi kelulusan sekolah Anda.
+                            <br>&bull; <strong>URL Aplikasi</strong>: Alamat URL domain aktif Anda saat ini.
+                            <br>&bull; <strong>Konfigurasi Database</strong>: Masukkan Host (biasanya `127.0.0.1` atau `localhost`), Port (`3306`), Nama Database, User, dan Password database yang Anda buat pada Langkah 1.
+                            <br>&bull; <strong>Email Pembelian</strong>: Masukkan email Anda yang terdaftar pada lisensi sistem.
+                        </li>
+                        <li>Klik <strong>Install Aplikasi Sekarang</strong>.</li>
+                        <li>Sistem akan memverifikasi email lisensi ke server pusat, men-setup file konfigurasi `.env`, memigrasi struktur tabel database, dan mengaktifkan aplikasi secara instan.</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= HPANEL PANEL ================= -->
+        <div id="hpanel" class="tab-panel">
+            
+            <!-- Step 1 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Buat Database MySQL di hPanel</div>
+                </div>
+                <div class="step-content">
+                    <p>Buat database baru di dashboard Hostinger Anda:</p>
+                    <ol class="substeps">
+                        <li>Login ke akun <strong>Hostinger (hPanel)</strong> Anda.</li>
+                        <li>Masuk ke kelola hosting domain Anda, lalu buka menu <strong>Databases</strong> &rarr; <strong>MySQL Databases</strong>.</li>
+                        <li>Masukkan nama database, username database baru, dan kata sandi database.</li>
+                        <li>Klik <strong>Create</strong>.</li>
+                        <li>Catat kredensial database Anda (Nama database dan username hPanel biasanya memiliki prefix unik seperti `u123456789_namaDB`).</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Unggah File Melalui File Manager</div>
+                </div>
+                <div class="step-content">
+                    <p>Ekstrak berkas aplikasi ke folder direktori tujuan di hPanel:</p>
+                    <ol class="substeps">
+                        <li>Buka menu <strong>File Manager</strong> di dashboard hPanel.</li>
+                        <li>Masuk ke folder domain Anda, lalu buka <strong>public_html</strong>.</li>
+                        <li>Unggah file zip aplikasi kelulusan Anda di sana.</li>
+                        <li>Klik kanan pada file zip tersebut dan klik <strong>Extract</strong>. Anda bisa mengekstraknya langsung di dalam folder root domain.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Sesuaikan Folder Publik Utama</div>
+                </div>
+                <div class="step-content">
+                    <p>Karena Hostinger hPanel mendukung pengaturan direktori publik utama dengan mudah:</p>
+                    <ol class="substeps">
+                        <li>Buka menu <strong>Websites</strong> &rarr; <strong>Domains</strong> di panel hosting.</li>
+                        <li>Pilih subdomain atau domain yang digunakan, lalu ubah <strong>Document Root</strong>-nya menjadi terarah ke folder `/public` (misalnya: `public_html/public`).</li>
+                        <li>Simpan konfigurasi tersebut. Ini adalah metode paling aman agar file backend inti tidak dapat diakses secara langsung oleh pengunjung.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step-card">
+                <div class="step-header">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Jalankan Wizard Instalasi</div>
+                </div>
+                <div class="step-content">
+                    <p>Setup aplikasi Anda dengan mudah:</p>
+                    <ol class="substeps">
+                        <li>Kunjungi alamat domain Anda di browser web.</li>
+                        <li>Sistem secara otomatis mengarahkan Anda ke wizard instalasi grafis.</li>
+                        <li>Lengkapi data konfigurasi nama situs Anda, koneksi MySQL yang baru dibuat di Hostinger, dan email lisensi Anda.</li>
+                        <li>Tekan tombol install dan tunggu proses instan selesai. Aplikasi Anda siap digunakan!</li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ================= TROUBLESHOOTING ================= -->
+        <div class="troubleshooting-sec">
+            <h2 class="troubleshooting-title">Troubleshooting & Pertanyaan Umum</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span style="color: var(--warning);">⚠️</span>
+                    Database Connection Error (Koneksi Database Gagal)
+                </div>
+                <div class="faq-answer">
+                    Pastikan Host database Anda diset ke <code>127.0.0.1</code> atau <code>localhost</code>. Periksa kembali prefix username dan nama database Anda. Di beberapa hosting (seperti Hostinger), prefix wajib disertakan (contoh: <code>u123456_dbkelulusan</code>).
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span style="color: var(--warning);">⚠️</span>
+                    Aktivasi Gagal / Hubungi Admin
+                </div>
+                <div class="faq-answer">
+                    Pastikan domain Anda sudah bisa diakses online secara publik agar server lisensi pusat dapat memverifikasi validitas domain Anda. Email yang dimasukkan harus sama persis dengan email pendaftaran lisensi Anda.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span style="color: var(--warning);">⚠️</span>
+                    Error 500 saat membuka Halaman Utama
+                </div>
+                <div class="faq-answer">
+                    Periksa log PHP di server Anda (<code>storage/logs/php_errors.log</code>). Pastikan ekstensi PHP <code>openssl</code> dan <code>curl</code> telah diaktifkan di konfigurasi cPanel/hPanel (menu <i>Select PHP Version</i> &rarr; <i>Extensions</i>).
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Aplikasi Kelulusan Sekolah. All Rights Reserved. Protected by Antigravity License Compiler.</p>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            // Remove active classes
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+
+            // Add active classes to selected
+            const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => 
+                btn.getAttribute('onclick').includes(tabId)
+            );
+            if (activeBtn) activeBtn.classList.add('active');
+
+            const activePanel = document.getElementById(tabId);
+            if (activePanel) activePanel.classList.add('active');
+        }
+    </script>
+</body>
+</html>

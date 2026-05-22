@@ -1,0 +1,27 @@
+vendor/
+node_modules/
+.env
+.env.backup
+.env.*
+
+# License Files
+license.key
+license.key.backup
+
+# Storage & Caches
+storage/*
+!storage/.gitignore
+!storage/logs/.gitignore
+!storage/backup/.gitignore
+
+# Uploads
+public/uploads/*
+!public/uploads/.gitignore
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Source files for encrypted services
+app/Services/LicenseService.src.php
+encrypt-license.php
