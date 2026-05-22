@@ -102,6 +102,16 @@ try {
 
     echo "\nDatabase setup complete.\n";
 
+    // Run all migration scripts in the database folder
+    echo "\nRunning migrations...\n";
+    $migrations = glob(__DIR__ . '/migrate_*.php');
+    foreach ($migrations as $migration) {
+        echo "Running migration: " . basename($migration) . "\n";
+        require_once $migration;
+    }
+    echo "All migrations completed successfully.\n";
+
 } catch (PDOException $e) {
     die("Database Error: " . $e->getMessage() . "\n");
 }
+
