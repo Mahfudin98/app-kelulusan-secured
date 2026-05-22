@@ -70,13 +70,9 @@ DB_PASS="$dbPass"
 ENV;
         file_put_contents(ROOT_PATH . '/.env', $envContent);
 
-        // Run migrations
+        // Run migrations and database setup silently
         ob_start();
         require_once ROOT_PATH . '/database/setup_db.php';
-        $migrations = glob(ROOT_PATH . '/database/migrate_*.php');
-        foreach ($migrations as $migration) {
-            require_once $migration;
-        }
         ob_end_clean();
 
         // Save license key
